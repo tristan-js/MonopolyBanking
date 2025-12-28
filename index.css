@@ -5,11 +5,18 @@ body {
     text-align: center;
     margin-top: 25%;
 }
+
 button{
     border-radius: 10px;
     border-width: none;
     cursor: pointer;
 }
+
 .input-css {
     width: 300px;
+}
+
+.hidden {
+    visibility: hidden; 
+    max-height: 0;
 }

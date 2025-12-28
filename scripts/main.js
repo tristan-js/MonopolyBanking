@@ -1,9 +1,16 @@
+if(!localStorage.getItem("playerData")) {
+    const playerData = []
+} else {
+
+}
+
 function updateCount() {
     const playerCount = document.getElementById('playerCount').value;
     const namesDiv = document.querySelector('.namesToShow-js');
 
-    for(let i = 0; i < playerCount; i++) {
-        console.log("gets here")
-        namesDiv.innerHTML += ``;
+    namesDiv.innerHTML = ''; //Resets
+
+    for(let i = 1; i <= playerCount; i++) {
+        namesDiv.innerHTML += `Name: <input placeholder="John" id="${i}"><br>`;
     }
 }
