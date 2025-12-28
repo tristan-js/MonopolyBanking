@@ -1,7 +1,17 @@
+let playerData = [];
+
 if(!localStorage.getItem("playerData")) {
-    const playerData = [];
+
+    console.log("playerData array not found");
+
 } else {
-    const playerData = localStorage.getItem("playerData");
+
+    playerData = JSON.parse(localStorage.getItem("playerData"));
+    console.log("playerData array loaded");
+    console.table(playerData);
+
+    document.getElementById("continueDiv").classList.remove("hidden");
+
 }
 
 function updateCount() {
@@ -10,26 +20,27 @@ function updateCount() {
 
     namesDiv.innerHTML = ''; //Resets
 
-    for(let i = 1; i <= playerCount; i++) {
+    for(let i = 0; i < playerCount; i++) {
         namesDiv.innerHTML += `Name: <input placeholder="John" id="nameIDNum_${i}"><br>`;
     }
-
-    namesDiv.innerHTML += `<button onclick="readNames(playerData, playerCount)">Submit</button>`;
+    
+    document.getElementById("submitButton").addEventListener("click", () => readNames(playerData, playerCount));
 }
 
-//Read in names and populate names array
-function readNames(playerCount) {
+//Read in names and money and populate playerData array
+function readNames(playerData, playerCount) {
+    const money = document.getElementById("moneyAmount").value;
+    playerData = [];
 
-    for(let i = 1; i < playerCount; i++) {
-        const nameInfo = document.getElementById(`NameIDNum_${i}`).value;
-        console.log(nameInfo);
+    for(let i = 0; i < playerCount; i++) {
+        const nameInfo = document.getElementById(`nameIDNum_${i}`);
 
-        playerData.push[{
-            "Name": nameInfo,
-            "Money": 0
-        }];
+        playerData.push({
+            "Name": nameInfo.value,
+            "Money": money
+        });
     }
 
     console.table(playerData);
-    localStorage.setItem("playerData", playerData);
+    localStorage.setItem("playerData", JSON.stringify(playerData));
 }

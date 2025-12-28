@@ -7,8 +7,18 @@
     <title>Monopoly Banking</title>
 </head>
 <body>
+    <div class="hidden" id="continueDiv">
+        Past game found, continue?
+        <button id="continueButton">Yes</button>
+    </div>
+
+    <div>
+        Starting Balance: <input id="moneyAmount">
+    </div>
+
     <p>Please insert how many players will be playing:</p>
     <select name="Players" class="players" id="playerCount" onchange="updateCount()">
+    <option value="0">0</option>
     <option value="1">1</option>
     <option value="2">2</option>
     <option value="3">3</option>
@@ -17,12 +27,17 @@
     <option value="6">6</option>
     <option value="7">7</option>
     <option value="8">8</option>
-    </select>
+    </select> <br> <br>
 
     <div class="namesToShow-js"></div>
 
-    <div id="playerNamesComponent" style="visibility: hidden; max-height: 0;">
+    <div id="playerNamesComponent">
+        
     </div>
+
+    <br>
+
+    <button id="submitButton">Submit</button>
 </body>
 </html>
 
