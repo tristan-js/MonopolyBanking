@@ -14,6 +14,10 @@ if(!localStorage.getItem("playerData")) {
 
 }
 
+document.getElementById("continueButton").addEventListener("click", () => {
+    window.location.href = 'banking.html';
+});
+
 function updateCount() {
     const playerCount = document.getElementById('playerCount').value;
     const namesDiv = document.querySelector('.namesToShow-js');
@@ -29,7 +33,7 @@ function updateCount() {
 
 //Read in names and money and populate playerData array
 function readNames(playerData, playerCount) {
-    const money = document.getElementById("moneyAmount").value;
+    const money = Number(document.getElementById("moneyAmount").value).toFixed(2);
     playerData = [];
 
     for(let i = 0; i < playerCount; i++) {
@@ -43,4 +47,5 @@ function readNames(playerData, playerCount) {
 
     console.table(playerData);
     localStorage.setItem("playerData", JSON.stringify(playerData));
+    window.location.href = 'banking.html';
 }
