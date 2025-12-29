@@ -1,4 +1,5 @@
 const playerData = JSON.parse(localStorage.getItem("playerData"));
+const transactionDiv = document.getElementById("transaction-div");
 
 playerData.forEach(element => {
     element.Money = Number(element.Money);
@@ -52,5 +53,44 @@ function changeBalance(index) {
             <button onclick="selectPlayer(${index})">Change Balance</button>
         </div>
     `;
-});
+    });
 }
+
+//Read for transaction button press
+document.getElementById("transaction-button").addEventListener("click", () => {
+
+    transactionDiv.innerHTML += 
+        `
+            <br><br>
+            Withdrawal From: 
+        `;
+
+    populateSelect(1);
+
+    transactionDiv.innerHTML += 
+        `
+            <br>
+            Deposit To: 
+        `;
+
+    populateSelect(2);
+
+    transactionDiv.innerHTML += 
+    `
+        <br><br> Amount: <input id="transaction-amount-input"> <br><br>
+        <button id="transaction-button" onclick="transaction()">Submit</button>
+    `;
+});
+
+function populateSelect(num) {
+    transactionDiv.innerHTML += `<Select name="player1" id="player${num}Select">`;
+
+    for(let i = 0; i < playerData.length; i++) {
+        document.getElementById(`player${num}Select`).innerHTML += 
+        `
+            <option value="${i}">${playerData[i].Name}</option>
+        `;
+    }
+}
+
+
