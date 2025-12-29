@@ -21,6 +21,24 @@ playerData.forEach((element, index) => {
     `;
 });
 
+function update() {
+    //After each update, save to localStorage and reset main div
+    localStorage.setItem("playerData", JSON.stringify(playerData));
+    playerDiv.innerHTML = '';
+
+    playerData.forEach((element, index) => {
+    playerDiv.innerHTML += 
+    `
+        <div class="players-div" id="box_${index}">
+            ${element.Name} <br>
+            Balance: $${element.Money}
+            <br><br>
+            <button onclick="selectPlayer(${index})">Change Balance</button>
+        </div>
+    `;
+    });
+}
+
 function selectPlayer(index) {
     const updateBox = document.getElementById(`box_${index}`);
     updateBox.innerHTML = `
@@ -39,27 +57,12 @@ function changeBalance(index) {
     playerData[index].Money += Number(document.getElementById(`money-insert-${index}`).value);
     console.table(playerData[index]);
 
-    //After each update, save to localStorage and reset main div
-    localStorage.setItem("playerData", JSON.stringify(playerData));
-    playerDiv.innerHTML = '';
-
-    playerData.forEach((element, index) => {
-    playerDiv.innerHTML += 
-    `
-        <div class="players-div" id="box_${index}">
-            ${element.Name} <br>
-            Balance: $${element.Money}
-            <br><br>
-            <button onclick="selectPlayer(${index})">Change Balance</button>
-        </div>
-    `;
-    });
+    update();
 }
 
-//Read for transaction button press
-document.getElementById("transaction-button").addEventListener("click", () => {
-
-    transactionDiv.innerHTML += 
+//Function for transaction button press
+function transactionButtonPress() {
+        transactionDiv.innerHTML += 
         `
             <br><br>
             Withdrawal From: 
@@ -78,9 +81,10 @@ document.getElementById("transaction-button").addEventListener("click", () => {
     transactionDiv.innerHTML += 
     `
         <br><br> Amount: <input id="transaction-amount-input"> <br><br>
-        <button id="transaction-button" onclick="transaction()">Submit</button>
+        <button id="confirm-transaction-button" onclick="transaction()">Submit</button>
     `;
-});
+}
+document.getElementById("transaction-button").addEventListener("click", transactionButtonPress());
 
 function populateSelect(num) {
     transactionDiv.innerHTML += `<Select name="player1" id="player${num}Select">`;
@@ -93,4 +97,15 @@ function populateSelect(num) {
     }
 }
 
+function transaction() {
+    const firstIndex = document.getElementById(`player1Select`).value; //Withdrawal
+    const secondIndex = document.getElementById(`player2Select`).value; //Deposit
+    const amount = document.getElementById(`transaction-amount-input`).value;
 
+    playerData[firstIndex].Money = Number(playerData[firstIndex].Money) - Number(amount) ;
+    playerData[secondIndex].Money = Number(playerData[secondIndex].Money) + Number(amount);
+
+    transactionDiv.innerHTML = `<button id="transaction-button" onclick="transactionButtonPress()">Transaction</button>`;
+
+    update();
+}
