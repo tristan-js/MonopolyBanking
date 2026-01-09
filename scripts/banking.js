@@ -1,6 +1,11 @@
 const playerData = JSON.parse(localStorage.getItem("playerData"));
 const transactionDiv = document.getElementById("transaction-div");
 
+document.getElementById("endGameButton").addEventListener('click', () => {
+    localStorage.clear();
+    window.location.href = 'index.html';
+});
+
 playerData.forEach(element => {
     element.Money = Number(element.Money);
 });
